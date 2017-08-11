@@ -37,10 +37,7 @@ func TestSplitImageWithIterator(t *testing.T) {
 	}
 
 	// drain the parts to check expected count
-	outs := []image.Image{}
-	for it.Next() {
-		outs = append(outs, it.Get())
-	}
+	outs := ConsumeIterator(it)
 
 	if len(outs) != 9 {
 		t.Fatalf("wrong number of parts: %d", len(outs))

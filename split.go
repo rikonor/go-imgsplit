@@ -11,12 +11,6 @@ const (
 	minHeight = 10
 )
 
-// subImager has a SubImage method
-type subImager interface {
-	image.Image
-	SubImage(r image.Rectangle) image.Image
-}
-
 // Config defines how to split a image
 type Config struct {
 	// X and Y count how many images the parent image will be split to
@@ -69,23 +63,4 @@ func SplitImageWithIterator(img image.Image, cfg Config) (ImageIterator, error) 
 			return simgr.SubImage(r)
 		},
 	}, nil
-}
-
-// ImageIterator is an iterators on a set of images
-type ImageIterator interface {
-	Next() bool
-	Get() image.Image
-}
-
-type mockImageIteratoer struct {
-	NextFn func() bool
-	GetFn  func() image.Image
-}
-
-func (ii *mockImageIteratoer) Next() bool {
-	return ii.NextFn()
-}
-
-func (ii *mockImageIteratoer) Get() image.Image {
-	return ii.GetFn()
 }
