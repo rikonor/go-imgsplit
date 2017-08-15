@@ -26,3 +26,16 @@ func (it *mockImageIteratoer) Next() bool {
 func (it *mockImageIteratoer) Get() image.Image {
 	return it.GetFn()
 }
+
+func mockIteratorFromImages(ms []image.Image) ImageIterator {
+	return &mockImageIteratoer{
+		NextFn: func() bool {
+			return len(ms) > 0
+		},
+		GetFn: func() image.Image {
+			m := ms[0]
+			ms = ms[1:]
+			return m
+		},
+	}
+}
